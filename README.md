@@ -2,9 +2,9 @@
 # VocabBattleV1
 ### สิ่งที่ต้องทำ(ถ้าคิดว่าขาดอะไรก็เพื่มเลยนะ):
    ```+
-    -[x]register
-    -[x]login/logout
-    -[]profile
+    - [x]register
+    - [x]login/logout
+    - []profile
     -[]ดูรายชื่อเพื่อน
     -[]เพิ่มเพื่อน
     -[]ลบเพื่อน
