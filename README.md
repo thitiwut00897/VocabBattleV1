@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # VocabBattle
+=======
+# VocabBattleV1
+>>>>>>> d890dc703ee7dd8664b9d8f86bbbd3b43becb3c7
 ### สิ่งที่ต้องทำ(ถ้าคิดว่าขาดอะไรก็เพื่มเลยนะ):
    ```+
     -register
@@ -19,5 +23,8 @@
     -โหมดchallenge
     -เงื่อนไขการชนะ()sss
     -ประวัติท้ายเกม
+<<<<<<< HEAD
  
 
+=======
+>>>>>>> d890dc703ee7dd8664b9d8f86bbbd3b43becb3c7
