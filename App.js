@@ -1,6 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View, Button, ImageBackground } from 'react-native';
 import Login from './screen/componant/login';
 import auth from './screen/firebase';
 import FirstScreen from './screen/main';
@@ -29,10 +29,12 @@ export default function App() {
   }, [])
   return (
     <View style={styles.container}>
-      {session.isLoggedIn ? 
-          <FirstScreen settt={setSession}/>
-         : <Login session={setSession}/>
-      } 
+      <ImageBackground source={{uri: ""}} style={styles.bgimg}>
+        {session.isLoggedIn ? 
+            <FirstScreen settt={setSession}/>
+          : <Login session={setSession}/>
+        } 
+      </ImageBackground>
     </View>
   );
 }
@@ -40,8 +42,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  bgimg: {
+    flex: 1,
+    resizeMode: 'cover',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
