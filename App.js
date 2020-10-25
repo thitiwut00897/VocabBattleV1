@@ -1,56 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Button, ImageBackground } from 'react-native';
-import Login from './screen/componant/login';
-import auth from './screen/firebase';
-import FirstScreen from './screen/main';
+// import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import MyNavigator from './navigation/myNavigator'
+import * as firebase from 'firebase'
+import firebaseConfig from './firebase/config'
 
 export default function App() {
-  
-  const [session, setSession] = useState({
-    isLoggedIn: false,
-    currentUser: null,
-    errorMessage: null
-  });
-  useEffect(() => {
-    const handleAuth = auth.onAuthStateChanged(user => {
-      if (user) {
-        setSession({
-          isLoggedIn:true,
-          currentUser: user,
-          errorMessage:null
-        });
-      }
-    });
-
-    return () => {
-      handleAuth();
-    }
-  }, [])
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig)
   return (
-    <View style={styles.container}>
-      <ImageBackground source={{uri: ""}} style={styles.bgimg}>
-        {session.isLoggedIn ? 
-            <FirstScreen settt={setSession}/>
-          : <Login session={setSession}/>
-        } 
-      </ImageBackground>
-    </View>
+    <MyNavigator />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  bgimg: {
-    flex: 1,
-    resizeMode: 'cover',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
