@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import * as firebase from 'firebase'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
+// import Status from '.../components/status';
 
 export default function RegisterScreen(props) {
     const [name, setName] = useState('')
@@ -27,6 +28,7 @@ export default function RegisterScreen(props) {
     }
     return(
         <View style={styles.container}>
+            {/* <Status/> */}
             <Animatable.Text animation="bounce" style={styles.greeting}>Sign up to get started</Animatable.Text>
             <View style={styles.myForm}>
                 <View style={{marginTop: 32}}>

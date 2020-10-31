@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import * as firebase from 'firebase'
+import Status from '../components/status';
 
 export default function HomeScreen(props) {
     const [email, setEmail] = useState('')
@@ -25,6 +26,7 @@ export default function HomeScreen(props) {
 
     return(
         <View style={styles.container}>
+            <Status/>
             <TouchableOpacity
                 style={styles.myButton}
                 onPress={() => {

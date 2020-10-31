@@ -4,6 +4,7 @@ import * as firebase from 'firebase'
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign } from '@expo/vector-icons';
+// import Status from '.../components/status';
 
 export default function LoginScreen(props) {
     const [email, setEmail] = useState('')
@@ -17,6 +18,7 @@ export default function LoginScreen(props) {
 
     return(
         <View style={styles.container}>
+            {/* <Status/> */}
             <Animatable.Text animation="bounceIn" style={styles.greeting}>Vocab Battle</Animatable.Text>
             <View style={styles.myForm}>
                 <View style={{marginTop: 32}}>
