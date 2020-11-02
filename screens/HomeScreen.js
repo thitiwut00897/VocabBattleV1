@@ -6,7 +6,6 @@ import Status from '../components/status';
 export default function HomeScreen(props) {
     const [email, setEmail] = useState('')
     const [displayName, setDisplayName] = useState('')
-
     useEffect(() => {
         try {
             const {email, displayName} = firebase.auth().currentUser
