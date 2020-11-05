@@ -4,16 +4,15 @@
    - [x] register
    - [x] login/logout
    - [x] netInfo
-   - [ ] ดูรายชื่อเพื่อน
-   - [ ] เพิ่มเพื่อน
-   - [ ] ลบเพื่อน
-   - [ ] หน้าUI(main, เรื่มเกมjoinห้อง, สร้างห้อง)
-   - [ ] ดูห้องทั้งหมด(้เข้าห้อง)
-   - [ ] multiplayer(ชวนเพื่อน)
+   - [ ] หน้าUI(ingame)
+   - [ ] show Monster
+   - [ ] singleplayer
    - [ ] how to play
-   - [ ] chat(ในเกม)
    - [ ] นับเวลาถอยหลัง
+   - [x] ตีmonster
+   - [x] typeตี
    - [x] เช็คคำศัพท์ไฟล์JSON
    - [ ] itemช่วยเหลือ
+   - [ ] เช็คคำซ่ำ
    - [ ] ประวัติท้ายเกม
 
