@@ -1,18 +1,22 @@
 
 # VocabBattleV1
-### สิ่งที่ต้องทำ(ถ้าคิดว่าขาดอะไรก็เพื่มเลยนะ):
    - [x] register
    - [x] login/logout
    - [x] netInfo
-   - [ ] หน้าUI(ingame)
-   - [ ] show Monster
-   - [ ] singleplayer
+
    - [ ] how to play
-   - [ ] นับเวลาถอยหลัง
+   - [ ] หน้าUI(ingame)
+      - [ ] show Monster
+   - [x] singleplayer
    - [x] ตีmonster
    - [x] typeตี
    - [x] เช็คคำศัพท์ไฟล์JSON
    - [ ] itemช่วยเหลือ
-   - [ ] เช็คคำซ่ำ
-   - [ ] ประวัติท้ายเกม
+   - [x] เช็คคำซ่ำ
+   - [ ] นับเวลาถอยหลัง
+      - [ ] หน้าประวัติท้ายเกม (เคลียเกม[ผ่าน x round] or gameover[ หมดเวลา ]) **** ใช้ vocablist ใน play.jsแสดงคำศัพท์
+
+   - [ ] 
+   - [ ] 
+
 
