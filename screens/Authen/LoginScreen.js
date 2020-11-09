@@ -18,7 +18,6 @@ export default function LoginScreen(props) {
 
     return(
         <View style={styles.container}>
-            {/* <Status/> */}
             <Animatable.Text animation="bounceIn" style={styles.greeting}>Vocab Battle</Animatable.Text>
             <View style={styles.myForm}>
                 <View style={{marginTop: 32}}>
