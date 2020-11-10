@@ -8,7 +8,7 @@ import RegisterScreen from '../screens/Authen/RegisterScreen'
 import HomeScreen from '../screens/HomeScreen'
 
 // more
-import PlayScreen from '../screens/more/Play'
+import PlayScreen from '../screens/Playing/Play'
 import HowtoPlay from '../screens/more/HowtoPlay'
 import ProfileScreen from '../screens//more/Profile'
 
@@ -21,7 +21,7 @@ const AppStack = createStackNavigator({
 }, {
     // DefaultNavigationOptions
     defaultNavigationOptions: {
-        headerStyle: { backgroundColor: "#84a9ac" },
+        headerStyle: { backgroundColor: "#9d65c9" },
         headerTintColor: "white",
     }
 })
@@ -32,7 +32,7 @@ const AuthStack = createStackNavigator({
 }, {
     // DefaultNavigationOptions
     defaultNavigationOptions: {
-        headerStyle: { backgroundColor: "#84a9ac" },
+        headerStyle: { backgroundColor: "#9d65c9" },
         headerTintColor: "white",
     }
 })

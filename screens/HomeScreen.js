@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, ImageBackground } from 'react-native'
 import * as firebase from 'firebase'
-import Status from '../components/status';
+import Status from '../components/status'
+import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
 export default function HomeScreen(props) {
+    const [bg, setBg] = useState(require('../assets/img/spacegif2.gif'))
     const [email, setEmail] = useState('')
     const [displayName, setDisplayName] = useState('')
     useEffect(() => {
@@ -23,36 +25,37 @@ export default function HomeScreen(props) {
         firebase.auth().signOut()
     }
 
+    const Menu = (title, naviName) => {
+        return (
+            <AwesomeButtonRick type="secondary"
+                stretch="true"
+                backgroundDarker="#9d65c9"
+                borderColor="#9d65c9"
+                backgroundActive="#ffffff"
+                textColor="#5d54a4"
+                onPress={() => {
+                    naviName == 'signOutUser' ? signOutUser() : props.navigation.navigate(naviName)
+                }}>{title}
+            </AwesomeButtonRick>
+        )
+    }
+
     return(
-        <View style={styles.container}>
+        <ImageBackground source={bg} style={styles.container}>
             <Status/>
-            <TouchableOpacity
-                style={styles.myButton}
-                onPress={() => {
-                    props.navigation.navigate('Play')
-                }}>
-                <Text>Play</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.myButton}
-                onPress={() => {
-                    props.navigation.navigate('Howto')
-                }}>
-                <Text>How to Play</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.myButton}
-                onPress={() => {
-                    props.navigation.navigate('Profile')
-                }}>
-                <Text>Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.myButton}
-                onPress={signOutUser}>
-                <Text>Log Out</Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.btn}>
+                {Menu('Play', 'Play')}
+            </View>
+            <View style={styles.btn}>
+                {Menu('How To Play', 'Howto')}
+            </View>
+            <View style={styles.btn}>
+                {Menu('Profile', 'Profile')}
+            </View>
+            <View style={styles.btn}>
+                {Menu('Log OUt', 'signOutUser')}
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -65,28 +68,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        resizeMode: "cover",
     },
-    linearGradient: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5
-      },
-    myButton: {
-        marginTop: 20,
-        height: 52,
+    btn: {
         width: '40%',
-        backgroundColor: '#84a9ac',
-        borderRadius: 4,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 0,
-	        height: 4,
-        },
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
-        elevation: 8,
+        margin: 10
     }
 })
