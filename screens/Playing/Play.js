@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, Animated, Alert } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import ProgressBar from 'react-native-progress/Bar'
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick'
 import wordd from '../word.json'
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 var vocablist =[];//คำศัพท์รวมถ้่าถูก
 
-export default function Play() {
+export default function Play(props) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
     const [answer, setAnswer] = useState("");
     const [hpmonster, setHpmonster] = useState(100)
@@ -16,6 +17,8 @@ export default function Play() {
     const [alphabet, setAlphabet] = useState(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
     const [status, setStatus] = useState('Heyy')
     const [img, setImage] = useState(require('../../assets/img/game/t100s1.png'))
+    const [key, setKey] = useState(0);
+    const [time, setTime] = useState(0);
 
 
     const Check =()=>{
@@ -61,6 +64,7 @@ export default function Play() {
             setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
             // setImage(require('../../assets/img/game/t' + hpType + 's1.png'))
             setImage(require('../../assets/img/game/t100s1.png'))
+            setKey(prevKey => prevKey + 1)
         }
     })
 
@@ -71,8 +75,32 @@ export default function Play() {
                 <View style={{flex: 1}}>
                     <Text style={{alignSelf: 'flex-start'}}>round : {round}</Text>
                 </View>
-                <View style={{flex: 1}}>
-                    <Text style={{alignSelf: 'flex-end'}}>time</Text>
+                <View style={{flex: 1,flexDirection:"row-reverse"}}>
+                    <CountdownCircleTimer
+                        key={key}
+                        isPlaying
+                        duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
+                        colors="#004777"
+                        onComplete={() => {
+                            Alert.alert(
+                                'Game Over',
+                                'Back to Homescreen',
+                                [{
+                                    text: 'Ok',
+                                    onPress: () => props.navigation.navigate("Home")
+                                }]
+                            )
+                        }}
+                        size={50}
+                        strokeWidth={5}
+                    >
+                        {({ remainingTime, animatedColor }) => (
+                        <Animated.Text
+                            style={{ color: animatedColor }}>
+                            {remainingTime}
+                        </Animated.Text>
+                        )}
+                    </CountdownCircleTimer>
                 </View>
             </View>
 
