@@ -8,6 +8,7 @@ export default function HomeScreen(props) {
     const [bg, setBg] = useState(require('../assets/img/spacegif2.gif'))
     const [email, setEmail] = useState('')
     const [displayName, setDisplayName] = useState('')
+    const stretch = true
     useEffect(() => {
         try {
             const {email, displayName} = firebase.auth().currentUser
@@ -28,7 +29,7 @@ export default function HomeScreen(props) {
     const Menu = (title, naviName) => {
         return (
             <AwesomeButtonRick type="secondary"
-                stretch="true"
+                stretch={stretch}
                 backgroundDarker="#9d65c9"
                 borderColor="#9d65c9"
                 backgroundActive="#ffffff"
