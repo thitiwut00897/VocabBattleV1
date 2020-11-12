@@ -11,13 +11,15 @@ import HomeScreen from '../screens/HomeScreen'
 import PlayScreen from '../screens/Playing/Play'
 import HowtoPlay from '../screens/more/HowtoPlay'
 import ProfileScreen from '../screens//more/Profile'
+import historyword from '../screens/Playing/historyword'
 
 const AppStack = createStackNavigator({
     // RouteConfigs
     Home: { screen: HomeScreen },
     Play: { screen: PlayScreen },
     Howto: { screen: HowtoPlay },
-    Profile: { screen: ProfileScreen }
+    Profile: { screen: ProfileScreen },
+    History: { screen: historyword }
 }, {
     // DefaultNavigationOptions
     defaultNavigationOptions: {

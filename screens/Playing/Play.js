@@ -99,16 +99,20 @@ export default function Play(props) {
                         key={key}
                         isPlaying
                         duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
+                        // duration={hpType == 50 ? 1: hpType == 100 ? 1: hpType == 150 ? 1: 1} test
                         colors="#004777"
                         onComplete={() => {
-                            Alert.alert(
-                                'Game Over',
-                                'Back to Homescreen',
-                                [{
-                                    text: 'Ok',
-                                    onPress: () => props.navigation.navigate("Home")
-                                }]
-                            )
+                            props.navigation.navigate("Home")
+                            props.navigation.navigate("History", vocablist)
+                            // Alert.alert(
+                            //     'Game Over',
+                            //     'Back to Homescreen',
+                            //     [{
+                            //         text: 'Ok',
+                            //         // onPress: () => props.navigation.navigate("Home")
+                            //         onPress: () => props.navigation.navigate("History", vocablist)
+                            //     }]
+                            // )
                         }}
                         size={50}
                         strokeWidth={5}
