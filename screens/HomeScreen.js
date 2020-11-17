@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, ImageBackground } from 'react-native'
 import * as firebase from 'firebase'
 import Status from '../components/status'
-import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick'
 
 export default function HomeScreen(props) {
     const [bg, setBg] = useState(require('../assets/img/spacegif2.gif'))

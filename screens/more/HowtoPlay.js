@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
-
-import Carousel from 'react-native-snap-carousel';
+import { Text, View, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native'
+import Carousel from 'react-native-snap-carousel'
+import ProgressBar from 'react-native-progress/Bar'
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
+import { AntDesign, Fontisto, Entypo } from '@expo/vector-icons'
 
 const height = Dimensions.get('screen').height
 const width = Dimensions.get('screen').width
@@ -13,27 +15,7 @@ export default class HowtoPlay extends React.Component {
         this.state = {
             activeIndex:0,
             carouselItems: [
-                {
-                    title:"Story Telling",
-                    text: `คุณกำลังออกเดินทางไปอวกาศเพื่อปฏิบัติภารกิจ แต่ monster ที่น่ารักของคุณอยากตามคุณไปด้วย..,\tเนื่องจากเป็นภารกิจลับ คุณจำเป็นต้องไปคนเดียว`,
-                    test: "test1"
-                },
-                {
-                    title:"Item 2",
-                    text: "Text 2",
-                },
-                {
-                    title:"Item 3",
-                    text: "Text 3",
-                },
-                {
-                    title:"Item 4",
-                    text: "Text 4",
-                },
-                {
-                    title:"Item 5",
-                    text: "Text 5",
-                },
+                1, 2, 3, 4
             ],
             viewport: {
                 width: Dimensions.get('window').width,
@@ -45,33 +27,88 @@ export default class HowtoPlay extends React.Component {
     _renderItem({item,index}){
         if(index == 0) {
             return (
-              <View style={styles.card}>
-                <View></View>
-                <Text style={{fontSize: 30}}>{item.title}</Text>
-                <Text style={styles.mytext}>{item.text}</Text>
-              </View>
+              <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
+                <View style={styles.mycontainer}>
+                    <Text style={styles.title}>STORY</Text>
+                    <Text style={styles.mytext}>{'\t'}คุณกำลังออกเดินทางไปอวกาศเพื่อปฏิบัติภารกิจ แต่ monster ที่น่ารักของคุณอยากตามไปด้วย ..,</Text>
+                    <AntDesign name="rocket1" size={24} color="white" />
+                    <Text style={styles.mytext}>{'\t'}เนื่องจากเป็นภารกิจลับ คุณจำเป็นต้องไปคนเดียว</Text>
+                    <Image source={require('../../assets/img/game/t100s1.png')}/>
+                </View>
+              </ImageBackground>
     
             )
         }else if(index == 1){
             return (
-                <View style={styles.card}>
-                  <Text style={{fontSize: 30}}>{item.title} 1</Text>
+                <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
+                <View style={styles.mycontainer}>
+                    <Text style={styles.mytext}>{'\t'}คุณต้องไล่ monster ให้กลับบ้านด้วยคำศัพท์ภาษาอังกฤษที่มีอักษรตัวแรกตรงตามที่ monster กำหนด</Text>
+                    <View style={styles.circle}>
+                        <Text style={{fontWeight: 'bold'}}>A</Text>
+                    </View>
+                    <Text style={styles.mytext}>{'\t'}โดยยานแต่ละคันที่ monster ขับตามคุณมา บ่งบอกความดื้อของ monster ว่าเขาจะยอมฟังคุณมากแค่ไหน</Text>
+                    <Image source={require('../../assets/img/game/t100s1.png')}/>
                 </View>
-      
+              </ImageBackground>
               )
-        }else if(index == 2){
+        }else if(index == 2) {
             return (
-                <View style={styles.card}>
-                  <Text style={{fontSize: 30}}>{item.title} 2</Text>
+                <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
+                    <View style={styles.mycontainer}>
+                        <Text style={styles.title}>ABOUT GAME 101</Text>
+                        <Text style={styles.mytext}>- ตัวอักษร 1 ตัว จะลดความดื้อของ monster ไป 10 หน่วย</Text>
+                        <Text style={styles.hp}>190/200</Text>
+                        <ProgressBar progress={190/200} width={200} color={'#ec0101'} />
+                        <Text style={styles.mytext}>- อย่าลืมว่าคุณต้องตอบภายในเวลาที่ monster กำหนด</Text>
+                        <CountdownCircleTimer
+                            onComplete={() => {
+                            return [true, 1000] // repeat animation in 1.5 seconds
+                            }}
+                            isPlaying
+                            duration={10}
+                            colors="#c060a1"
+                            size={50}
+                            strokeWidth={5}
+                        />
+                        <Text style={styles.mytext}>- มีโอกาศตอบผิด / ซ้ำ ได้เพียง 3 ครั้งใน 1 เกม</Text>
+                        <View style={{flexDirection: 'row', margin: 5}}>
+                            <AntDesign name="heart" size={18} color="#cf1b1b" />
+                            <AntDesign name="heart" size={18} color="#cf1b1b" />
+                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
+                        </View>
+                        {/* <View style={{flexDirection: 'row', margin: 5}}>
+                            <AntDesign name="heart" size={18} color="#cf1b1b" />
+                            <AntDesign name="heart" size={18} color="#cf1b1b" />
+                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
+                        </View>
+                        <View style={{flexDirection: 'row', margin: 5}}>
+                            <AntDesign name="heart" size={18} color="#cf1b1b" />
+                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
+                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
+                        </View> */}
+                    </View>
+              </ImageBackground>
+    
+            )
+        }else if(index == 3) {
+            return (
+              <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
+                <View style={styles.mycontainer}>
+                    <Text style={styles.title}>EXTRA ITEMS</Text>
+                    <Text style={styles.myitem}><Fontisto name="suitcase" size={30} color="white" /> - แพคกระเป๋า</Text>
+                    <Text style={styles.mytext}>{'\t'}จะทำการแพค monster ตัวนั้นส่งกลับบ้านทันที</Text>
+                    <Text style={styles.myitem}><Entypo name="hand" size={30} color="white" /> - ลูบหัว</Text>
+                    <Text style={styles.mytext}>{'\t'}เมื่อลูบหัว จะลดความดื้อของ monster x2</Text>
                 </View>
-      
-              )
+              </ImageBackground>
+    
+            )
         }
     }
 
     render() {
         return (
-          <View style={styles.container}>
+          <View style={styles.containerbg}>
             <View onLayout={() => {
                 this.setState({
                     viewport: {
@@ -104,21 +141,52 @@ const styles = StyleSheet.create({
     card: {
         height: viewportHeight,
         padding: 20,
-        backgroundColor: 'floralwhite',
-        // borderRadius: 5,
+        resizeMode: "cover",
         borderRightWidth: 0.5,
         borderRightColor: '#84a9ac',
     },
     circle: {
-        width:15,
-        height: 15,
-        borderRadius: 15/2,
+        width: 40,
+        height: 40,
+        borderRadius: 40/2,
         borderWidth: 1,
         borderColor: '#84a9ac',
-        margin: 10,
+        backgroundColor: '#84a9ac',
+        // margin: 5,
+        color: 'red',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    mycontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: 'white',
+        fontFamily: 'Chalkboard SE',
     },
     mytext: {
-
+        margin: 10,
+        padding: 15,
+        color: 'floralwhite',
+        fontSize: 16,
+        fontFamily: 'Chalkboard SE',
+    },
+    hp: {
+        color: 'white',
+        fontWeight: 'bold',
+        margin: 5
+    },
+    myitem: {
+        margin: 10,
+        padding: 15,
+        color: 'floralwhite',
+        fontSize: 25,
+        fontFamily: 'Chalkboard SE',
+        alignSelf: 'flex-start'
     }
 })
 

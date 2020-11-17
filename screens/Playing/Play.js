@@ -56,7 +56,6 @@ export default function Play(props) {
                 addVocab(vocablist.concat(answer))
                 {isItemHand ? setHpmonster(hpmonster-(answer.length*20)) : setHpmonster(hpmonster-(answer.length*10))}
                 setIsItemHand(false)
-                //setHpmonster(hpmonster-(answer.length*10))
                 setAnswer('')//รีtextinput
                 console.log(vocablist);
                 setStatus('')
@@ -66,16 +65,18 @@ export default function Play(props) {
                 setStatus('I don\'t know this word ')
                 HearBroke()
             }
-        }else if (answer[0] != alphabet) {
+        }else if (answer !== '' && answer[0] != alphabet) {
             // ตอบตัวหน้าไม่ตรง
             setAnswer('')
             setStatus('what are you saying')
             HearBroke()
         }else {
             // ตอบซ้ำ
-            setAnswer('')//รีtextinput
-            setStatus('already!')
-            HearBroke()
+            if(answer !== ''){
+                setAnswer('')//รีtextinput
+                setStatus('already!')
+                HearBroke()
+            }
         }
     }
 
@@ -174,13 +175,13 @@ export default function Play(props) {
                             </Animated.Text>
                             )}
                         </CountdownCircleTimer>
-                        <View style={{flexDirection: 'row', margin: 10}}>
+                        <View style={{flexDirection: 'row', margin: 5}}>
                             <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemPack}>
-                                <Text><Fontisto name="suitcase" size={40} color="#59405c" /> x{myItemPack}</Text>
+                                <Text><Fontisto name="suitcase" size={30} color="#59405c" /> x{myItemPack}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemHand}>
-                                <Text><Entypo name="hand" size={40} color="#59405c" /> x{myItemHand}</Text>
+                                <Text><Entypo name="hand" size={30} color="#59405c" /> x{myItemHand}</Text>
                             </TouchableOpacity>
                         </View>
                             <Text style={styles.status}>length {isItemHand ? 'x2' : 'x1'}</Text>
@@ -219,7 +220,7 @@ Play.navigationOptions = {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 3,
         alignItems: 'center',
         justifyContent: 'center',
         // backgroundColor: 'white',
@@ -232,12 +233,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     mybody: {
-        flex: 7,
+        flex: 6,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     myMonster: {
-        margin: 10,
+        marginTop: 40,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -266,6 +267,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily: 'Chalkboard SE',
-        margin: 10
+        marginTop: 3
     }
 })
