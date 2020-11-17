@@ -14,8 +14,9 @@ export default class HowtoPlay extends React.Component {
             activeIndex:0,
             carouselItems: [
                 {
-                    title:"Item 1",
-                    text: "Text 1",
+                    title:"Story Telling",
+                    text: `คุณกำลังออกเดินทางไปอวกาศเพื่อปฏิบัติภารกิจ แต่ monster ที่น่ารักของคุณอยากตามคุณไปด้วย..,\tเนื่องจากเป็นภารกิจลับ คุณจำเป็นต้องไปคนเดียว`,
+                    test: "test1"
                 },
                 {
                     title:"Item 2",
@@ -42,14 +43,30 @@ export default class HowtoPlay extends React.Component {
     }
 
     _renderItem({item,index}){
-        return (
-          <View style={styles.card}>
-            <View></View>
-            <Text style={{fontSize: 30}}>{item.title}</Text>
-            <Text>{item.text}</Text>
-          </View>
-
-        )
+        if(index == 0) {
+            return (
+              <View style={styles.card}>
+                <View></View>
+                <Text style={{fontSize: 30}}>{item.title}</Text>
+                <Text style={styles.mytext}>{item.text}</Text>
+              </View>
+    
+            )
+        }else if(index == 1){
+            return (
+                <View style={styles.card}>
+                  <Text style={{fontSize: 30}}>{item.title} 1</Text>
+                </View>
+      
+              )
+        }else if(index == 2){
+            return (
+                <View style={styles.card}>
+                  <Text style={{fontSize: 30}}>{item.title} 2</Text>
+                </View>
+      
+              )
+        }
     }
 
     render() {
@@ -100,5 +117,8 @@ const styles = StyleSheet.create({
         borderColor: '#84a9ac',
         margin: 10,
     },
+    mytext: {
+
+    }
 })
 

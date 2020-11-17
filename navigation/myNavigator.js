@@ -6,12 +6,15 @@ import LoadingScreen from '../screens/LoadingScreen'
 import LoginScreen from '../screens/Authen/LoginScreen'
 import RegisterScreen from '../screens/Authen/RegisterScreen'
 import HomeScreen from '../screens/HomeScreen'
+import ForgotPassScreen from '../screens/Authen/ForgotPassword'
+
+// play
+import PlayScreen from '../screens/Playing/Play'
+import historyword from '../screens/Playing/historyword'
 
 // more
-import PlayScreen from '../screens/Playing/Play'
 import HowtoPlay from '../screens/more/HowtoPlay'
 import ProfileScreen from '../screens//more/Profile'
-import historyword from '../screens/Playing/historyword'
 
 const AppStack = createStackNavigator({
     // RouteConfigs
@@ -19,7 +22,7 @@ const AppStack = createStackNavigator({
     Play: { screen: PlayScreen },
     Howto: { screen: HowtoPlay },
     Profile: { screen: ProfileScreen },
-    History: { screen: historyword }
+    History: { screen: historyword },
 }, {
     // DefaultNavigationOptions
     defaultNavigationOptions: {
@@ -30,7 +33,8 @@ const AppStack = createStackNavigator({
 
 const AuthStack = createStackNavigator({
     Login: { screen: LoginScreen },
-    Register: { screen: RegisterScreen }
+    Register: { screen: RegisterScreen },
+    ForgotPass: { screen: ForgotPassScreen }
 }, {
     // DefaultNavigationOptions
     defaultNavigationOptions: {

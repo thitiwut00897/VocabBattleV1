@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, Animated, Alert } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, Animated, SafeAreaView, Alert} from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import ProgressBar from 'react-native-progress/Bar'
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick'
-import wordd from '../word.json'
+import * as Animatable from 'react-native-animatable';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-
-//var vocablist =[];//คำศัพท์รวมถ้่าถูก
+import { AntDesign, Fontisto, Entypo } from '@expo/vector-icons'
+import wordd from '../word.json'
 
 export default function Play(props) {
-    const [vocablist, addVocab] = useState([])
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
-    const [answer, setAnswer] = useState("");
+    // game
+    const [vocablist, addVocab] = useState([])
+    const [answer, setAnswer] = useState("")
+    const [round, setround] = useState(1)
+    const [heart, setHeart] = useState([true, true, true])
+    const [countHeart, addCount] = useState(1)
+    // item
+    const [myItemPack, setItemPack] = useState(3)
+    const [myItemHand, setItemHand] = useState(2)
+    const [isItemHand, setIsItemHand] = useState(false)
+    // monster
+    const [alphabet, setAlphabet] = useState(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
     const [hpmonster, setHpmonster] = useState(100)
     const [hpType, setHpType] = useState(100)
-    const [round, setround] = useState(1)
-    const [alphabet, setAlphabet] = useState(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
     const [status, setStatus] = useState('Heyy')
     const [img, setImage] = useState(require('../../assets/img/game/t100s1.png'))
     const [key, setKey] = useState(0);
-    const [time, setTime] = useState(0);
     const MonsterImg = {
         // hpType = 50
         t50s1: require('../../assets/img/game/t50s1.png'),
@@ -39,117 +46,175 @@ export default function Play(props) {
         // hpType = 200
         t200s1: require('../../assets/img/game/t200s1.png'),
         t200s2: require('../../assets/img/game/t200s2.png'),
-        t200s3: require('../../assets/img/game/t150s3.png'),
+        t200s3: require('../../assets/img/game/t200s3.png'),
         t200s4: require('../../assets/img/game/t200s4.png'),
     }
-
 
     const Check =()=>{
         if (answer[0] == alphabet  && vocablist.every((item) => item !== answer)){
             if (answer in wordd == true){
-                //vocablist.push(answer);
                 addVocab(vocablist.concat(answer))
-                setHpmonster(hpmonster-(answer.length*10))
+                {isItemHand ? setHpmonster(hpmonster-(answer.length*20)) : setHpmonster(hpmonster-(answer.length*10))}
+                setIsItemHand(false)
+                //setHpmonster(hpmonster-(answer.length*10))
                 setAnswer('')//รีtextinput
                 console.log(vocablist);
                 setStatus('')
             }else{
+                // ตอบไม่ถูก
                 setAnswer('')//รีtextinput
-                console.log('ผิด');
                 setStatus('I don\'t know this word ')
+                HearBroke()
             }
-        }else{
+        }else if (answer[0] != alphabet) {
+            // ตอบตัวหน้าไม่ตรง
+            setAnswer('')
+            setStatus('what are you saying')
+            HearBroke()
+        }else {
+            // ตอบซ้ำ
             setAnswer('')//รีtextinput
-            console.log('ซ้ำ')
             setStatus('already!')
+            HearBroke()
         }
-        
+    }
+
+    const itemPack = () => {
+        // ~ ข้ามตัวนี้ สุ่มตัวใหม่
+        if(myItemPack > 0){
+            const randomHp = (Math.floor(Math.random()*4)+1)*50
+            setHpmonster(randomHp)
+            setHpType(randomHp)
+            setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
+            setImage(randomHp == 50 ? MonsterImg.t50s1 : randomHp == 100 ? MonsterImg.t100s1 : randomHp == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
+            setKey(prevKey => prevKey + 1)
+            setItemPack(myItemPack-1)
+        }
+    }
+
+    const itemHand = () => {
+        // เลือดลด * 2
+        if(myItemHand > 0){
+            setIsItemHand(true)
+            setItemHand(myItemHand-1)
+        }
+    }
+
+    const HearBroke = () => {
+        if(countHeart == 1){
+            setHeart([true, true, false])
+            addCount(countHeart+1)
+        }else if(countHeart == 2){
+            setHeart([true, false, false])
+            addCount(countHeart+1)
+        }else if(countHeart == 3){
+            gameOver()
+        }
+    }
+
+    const gameOver = () => {
+        props.navigation.navigate("Home")
+        props.navigation.navigate("History", vocablist)
     }
 
     useEffect(()=>{
-        if (hpmonster <= 0){
+        if(hpmonster <= 0){
             // show status monster animation
             const randomHp = (Math.floor(Math.random()*4)+1)*50
             setHpmonster(randomHp)
             setHpType(randomHp)
             setround(round+1)
             setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
-            setImage(hpType == 50 ? MonsterImg.t50s1 : hpType == 100 ? MonsterImg.t100s1 : hpType == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
+            setImage(randomHp == 50 ? MonsterImg.t50s1 : randomHp == 100 ? MonsterImg.t100s1 : randomHp == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
             setKey(prevKey => prevKey + 1)
-        }else {
-            if (0.75 >= hpmonster/hpType >= 0.51) {
-                setImage(hpType == 50 ? MonsterImg.t50s2 : hpType == 100 ? MonsterImg.t100s2 : hpType == 150 ? MonsterImg.t150s2 : MonsterImg.t200s2)
-            }else if (0.5 >= hpmonster/hpType >= 0.26) {
-                setImage(hpType == 50 ? MonsterImg.t50s3 : hpType == 100 ? MonsterImg.t100s3 : hpType == 150 ? MonsterImg.t150s3 : MonsterImg.t200s3)
-            }else if (0.25 >= hpmonster.hpType >= 0.01) {
-                setImage(hpType == 50 ? MonsterImg.t50s4 : hpType == 100 ? MonsterImg.t100s4 : hpType == 150 ? MonsterImg.t150s4 : MonsterImg.t200s4)
-            }
+        }else if(hpmonster/hpType <= 0.25 ){
+            setImage(hpType == 50 ? MonsterImg.t50s4 : hpType == 100 ? MonsterImg.t100s4 : hpType == 150 ? MonsterImg.t150s4 : MonsterImg.t200s4)
+        }else if(hpmonster/hpType <= 0.5) {
+            setImage(hpType == 50 ? MonsterImg.t50s3 : hpType == 100 ? MonsterImg.t100s3 : hpType == 150 ? MonsterImg.t150s3 : MonsterImg.t200s3)
+        }else if(hpmonster/hpType <= 0.75) {
+            setImage(hpType == 50 ? MonsterImg.t50s2 : hpType == 100 ? MonsterImg.t100s2 : hpType == 150 ? MonsterImg.t150s2 : MonsterImg.t200s2)
         }
     })
 
     return(
-        <ImageBackground source={bg} style={styles.container}>
+        <SafeAreaView style={{flex: 1}}>
+            <ImageBackground source={bg} style={styles.container}>
 
-            <View style={styles.myheader}>
-                <View style={{flex: 1}}>
-                    <Text style={{alignSelf: 'flex-start'}}>round : {round}</Text>
-                </View>
-                <View style={{flex: 1,flexDirection:"row-reverse"}}>
-                    <CountdownCircleTimer
-                        key={key}
-                        isPlaying
-                        duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
-                        // duration={hpType == 50 ? 1: hpType == 100 ? 1: hpType == 150 ? 1: 1} test
-                        colors="#004777"
-                        onComplete={() => {
-                            props.navigation.navigate("Home")
-                            props.navigation.navigate("History", vocablist)
-                            // Alert.alert(
-                            //     'Game Over',
-                            //     'Back to Homescreen',
-                            //     [{
-                            //         text: 'Ok',
-                            //         // onPress: () => props.navigation.navigate("Home")
-                            //         onPress: () => props.navigation.navigate("History", vocablist)
-                            //     }]
-                            // )
-                        }}
-                        size={50}
-                        strokeWidth={5}
-                    >
-                        {({ remainingTime, animatedColor }) => (
-                        <Animated.Text
-                            style={{ color: animatedColor }}>
-                            {remainingTime}
-                        </Animated.Text>
-                        )}
-                    </CountdownCircleTimer>
-                </View>
-            </View>
+                <View style={styles.myheader}>
+                    <View style={{flex: 1}}>
+                        {/* <AntDesign name="home" size={30} color="black" /> */}
+                        <Text style={{alignSelf: 'flex-start', marginTop: 10}}>round : {round}</Text>
+                        <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
+                            {heart[0] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
+                            {heart[1] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
+                            {heart[2] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
+                        </View>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <CountdownCircleTimer
+                            key={key}
+                            isPlaying
+                            duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
+                            colors={[
+                                ['#9d65c9', 0.3],
+                                ['#d789d7', 0.3],
+                                ['#F7B801', 0.2],
+                                ['#A30000', 0.2],
+                            ]}
+                            onComplete={() => {
+                                gameOver()
+                            }}
+                            size={50}
+                            strokeWidth={5}
+                        >
+                            {({ remainingTime, animatedColor }) => (
+                            <Animated.Text
+                                style={{ color: animatedColor }}>
+                                {remainingTime}
+                            </Animated.Text>
+                            )}
+                        </CountdownCircleTimer>
+                        <View style={{flexDirection: 'row', margin: 10}}>
+                            <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemPack}>
+                                <Text><Fontisto name="suitcase" size={40} color="#59405c" /> x{myItemPack}</Text>
+                            </TouchableOpacity>
 
-            <View style={styles.mybody}>
-                <View style={styles.myMonster}>
-                    <Text style={styles.hp}>{hpmonster} / {hpType}</Text>
-                    <ProgressBar progress={hpmonster/hpType} width={200} color={'#ec0101'} />
-                    <Text style={styles.myTypeWord} animation="bounceIn">{alphabet}</Text>
-                    <Image source={img} style={{width: 285, height: 210, marginTop: 15}} />
-                    <Text>{status}</Text>
+                            <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemHand}>
+                                <Text><Entypo name="hand" size={40} color="#59405c" /> x{myItemHand}</Text>
+                            </TouchableOpacity>
+                        </View>
+                            <Text style={styles.status}>length {isItemHand ? 'x2' : 'x1'}</Text>
+                    </View>
                 </View>
-                <View style={{alignItems: 'center', justifyContent: 'flex-start'}}>
-                    <TextInput style={styles.myInput} autoCapitalize = 'none' onfocus="" onChangeText={(text)=>{setAnswer(text.toLowerCase())}}>{answer}</TextInput>
-                    <AwesomeButtonRick type="secondary"
-                        backgroundDarker="#9d65c9"
-                        borderColor="#9d65c9"
-                        backgroundActive="#ffffff"
-                        textColor="#5d54a4"
-                        onPress={() => {Check()}}
-                    >CHASE
-                    </AwesomeButtonRick>
-                </View>
-            </View>
 
-        </ImageBackground>
+                <View style={styles.mybody}>
+                    <View style={styles.myMonster}>
+                        <Text style={styles.hp}>{hpmonster} / {hpType}</Text>
+                        <ProgressBar progress={hpmonster/hpType} width={200} color={'#ec0101'} />
+                        <Animatable.Text animation="bounce" style={styles.myTypeWord}>{alphabet}</Animatable.Text>
+                        <Image source={img} style={{width: 285, height: 210, margin: 20}} />
+                        <Text style={styles.status}>{status}</Text>
+                    </View>
+                    <View style={{alignItems: 'center', justifyContent: 'flex-start'}}>
+                        <TextInput style={styles.myInput} autoCapitalize = 'none' onfocus="" onChangeText={(text)=>{setAnswer(text.toLowerCase())}}>{answer}</TextInput>
+                        <AwesomeButtonRick type="secondary"
+                            backgroundDarker="#9d65c9"
+                            borderColor="#9d65c9"
+                            backgroundActive="#ffffff"
+                            textColor="#5d54a4"
+                            onPress={() => {Check()}}
+                        >CHASE
+                        </AwesomeButtonRick>
+                    </View>
+                </View>
+
+            </ImageBackground>
+        </SafeAreaView>
     )
+}
+
+Play.navigationOptions = {
+    headerShown: false
 }
 
 const styles = StyleSheet.create({
@@ -163,16 +228,16 @@ const styles = StyleSheet.create({
     myheader: {
         flex: 1,
         flexDirection: 'row',
-        paddingTop: 5,
+        paddingTop: 10,
         paddingHorizontal: 10,
     },
     mybody: {
-        flex: 9,
+        flex: 7,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     myMonster: {
-        margin: 3,
+        margin: 10,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -183,6 +248,7 @@ const styles = StyleSheet.create({
     },
     myTypeWord: {
         fontSize: 32,
+        fontWeight: 'bold',
         margin: 5
     },
     myInput: {
@@ -194,6 +260,12 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 16,
         padding: 5,
-        margin: 5
+        margin: 10
     },
+    status: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: 'Chalkboard SE',
+        margin: 10
+    }
 })
