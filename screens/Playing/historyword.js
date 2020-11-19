@@ -7,6 +7,10 @@ import Play from './Play'
 export default function history(vocablist) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
     const hiss = vocablist.navigation.state.params.map(word => {return(<Text key={word} style={{fontSize: 18}} >{word}</Text>)})
+    const playAgain = ()=>{ //ทำให้ย้อนไปหน้าhome ไม่ไปhistory
+        vocablist.navigation.navigate("Home")
+        vocablist.navigation.navigate("Play")
+    }
     return(
     <ImageBackground source={bg} style={styles.container}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
@@ -24,7 +28,7 @@ export default function history(vocablist) {
                 borderColor="#9d65c9"
                 backgroundActive="#ffffff"
                 textColor="#5d54a4"
-                onPress={() => vocablist.navigation.navigate("Play")}
+                onPress={() => playAgain()}
             >Play Again
             </AwesomeButtonRick>
         </View>
