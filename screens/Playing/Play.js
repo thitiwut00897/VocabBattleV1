@@ -16,17 +16,24 @@ export default function Play(props) {
     const [round, setround] = useState(1)
     const [heart, setHeart] = useState([true, true, true])
     const [countHeart, addCount] = useState(1)
+    const [basedamage, setBasedamage] = useState(10)
+    const [score, setScore] = useState(0)
+    const [countHit, setCountHit] = useState(0) // จำนวนการตี ในแต่ละรอบ
+    const [countAlphabet, setCountAlphabet] = useState(0) // นับจำนวนตัวอักษร ในแต่ละรอบ
     // item
     const [myItemPack, setItemPack] = useState(3)
     const [myItemHand, setItemHand] = useState(2)
     const [isItemHand, setIsItemHand] = useState(false)
     // monster
     const [alphabet, setAlphabet] = useState(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
-    const [hpmonster, setHpmonster] = useState(100)
-    const [hpType, setHpType] = useState(100)
+    const [hpmonster, setHpmonster] = useState(50)
+    const [hpType, setHpType] = useState(50)
     const [status, setStatus] = useState('Heyy')
     const [img, setImage] = useState(require('../../assets/img/game/t100s1.png'))
     const [key, setKey] = useState(0);
+    const [lvmon, setLvmon] = useState(1); //lv การเกิดมอน
+    const [delezmon, setDelezmon] = useState(1); //ใช้ไม่ให้มอน50 เกิดหลังรอบ20
+    const [randomHp,setRandomHp] = useState(50)
     const MonsterImg = {
         // hpType = 50
         t50s1: require('../../assets/img/game/t50s1.png'),
@@ -54,11 +61,14 @@ export default function Play(props) {
         if (answer[0] == alphabet  && vocablist.every((item) => item !== answer)){
             if (answer in wordd == true){
                 addVocab(vocablist.concat(answer))
-                {isItemHand ? setHpmonster(hpmonster-(answer.length*20)) : setHpmonster(hpmonster-(answer.length*10))}
+                {isItemHand ? setHpmonster(hpmonster-((answer.length*basedamage)*2)) : setHpmonster(hpmonster-((answer.length*basedamage)*1))}
                 setIsItemHand(false)
                 setAnswer('')//รีtextinput
                 console.log(vocablist);
                 setStatus('')
+                //ใช้ทำscore
+                setCountAlphabet(countAlphabet+answer.length) 
+                setCountHit(countHit+1)
             }else{
                 // ตอบไม่ถูก
                 setAnswer('')//รีtextinput
@@ -83,7 +93,7 @@ export default function Play(props) {
     const itemPack = () => {
         // ~ ข้ามตัวนี้ สุ่มตัวใหม่
         if(myItemPack > 0){
-            const randomHp = (Math.floor(Math.random()*4)+1)*50
+            setRandomHp(((Math.floor(Math.random()*lvmon)+delezmon)*50))
             setHpmonster(randomHp)
             setHpType(randomHp)
             setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
@@ -114,7 +124,7 @@ export default function Play(props) {
     }
 
     const gameOver = () => {
-        const passtohis = [vocablist, round]
+        const passtohis = [vocablist, round, score]
         props.navigation.navigate("Home")
         props.navigation.navigate("History", passtohis)
     }
@@ -122,10 +132,22 @@ export default function Play(props) {
     useEffect(()=>{
         if(hpmonster <= 0){
             // show status monster animation
-            const randomHp = (Math.floor(Math.random()*4)+1)*50
-            setHpmonster(randomHp)
-            setHpType(randomHp)
+            if (round == 5||round == 15 || round== 25){ // รอบตามนี้เพิ่มพลัง
+                setBasedamage(basedamage+(hpType/50))
+            }
             setround(round+1)
+            if (round == 3 || round == 10 ){ //ทำให้มอนค่อยๆเก่งขึ้น [สุ่ม50, 50 100, 50 100 150]
+                setLvmon(lvmon+1)
+            }
+            if(round == 20){ // ทำให้สุ่ม 100 150 200
+                setDelezmon(delezmon+1)
+            }
+            setScore(score+((countAlphabet/countHit)*1000))
+            setCountHit(0)
+            setCountAlphabet(0)
+            setRandomHp(((Math.floor(Math.random()*lvmon)+delezmon)*50))
+            setHpmonster(randomHp) //set รอบใหม่
+            setHpType(randomHp) //set รอบใหม่
             setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
             setImage(randomHp == 50 ? MonsterImg.t50s1 : randomHp == 100 ? MonsterImg.t100s1 : randomHp == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
             setKey(prevKey => prevKey + 1)
@@ -187,6 +209,8 @@ export default function Play(props) {
                             </TouchableOpacity>
                         </View>
                             <Text style={styles.status}>length {isItemHand ? 'x2' : 'x1'}</Text>
+                            <Text style={styles.status}>Attack {basedamage}</Text>
+                            <Text style={styles.status}>Score {score}</Text>
                     </View>
                 </View>
 

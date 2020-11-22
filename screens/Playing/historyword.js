@@ -9,6 +9,7 @@ export default function history(passtohis) {
     console.log(passtohis.navigation.state.params[1])
     const round = passtohis.navigation.state.params[1]
     const hiss = passtohis.navigation.state.params[0].map(word => {return(<Text key={word} style={{fontSize: 18}} >{word}</Text>)})
+    const score = passtohis.navigation.state.params[2]
     const playAgain = ()=>{ //ทำให้ย้อนไปหน้าhome ไม่ไปhistory
         passtohis.navigation.navigate("Home")
         passtohis.navigation.navigate("Play")
@@ -17,7 +18,7 @@ export default function history(passtohis) {
     <ImageBackground source={bg} style={styles.container}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
             <Text style={styles.gameover}>Game Over</Text>
-            <Text style={{margin: 5, fontSize: 20}}>chase {round}</Text>
+    <Text style={{margin: 5, fontSize: 20}}>chase {round} Score {score}</Text>
         </View>
         <View style={{flex: 3, justifyContent: 'flex-start'}}>
             <ScrollView style={styles.scrollView}>
