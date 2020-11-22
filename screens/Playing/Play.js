@@ -114,8 +114,9 @@ export default function Play(props) {
     }
 
     const gameOver = () => {
+        const passtohis = [vocablist, round]
         props.navigation.navigate("Home")
-        props.navigation.navigate("History", vocablist)
+        props.navigation.navigate("History", passtohis)
     }
 
     useEffect(()=>{
@@ -156,6 +157,7 @@ export default function Play(props) {
                             key={key}
                             isPlaying
                             duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
+                            // duration={hpType == 50 ? 0: hpType == 0 ? 0: hpType == 150 ? 0: 0}
                             colors={[
                                 ['#9d65c9', 0.3],
                                 ['#d789d7', 0.3],

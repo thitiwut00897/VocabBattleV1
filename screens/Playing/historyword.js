@@ -4,18 +4,20 @@ import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/ric
 import Play from './Play'
 
 // export default function history(vocablist) {
-export default function history(vocablist) {
+export default function history(passtohis) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
-    const hiss = vocablist.navigation.state.params.map(word => {return(<Text key={word} style={{fontSize: 18}} >{word}</Text>)})
+    console.log(passtohis.navigation.state.params[1])
+    const round = passtohis.navigation.state.params[1]
+    const hiss = passtohis.navigation.state.params[0].map(word => {return(<Text key={word} style={{fontSize: 18}} >{word}</Text>)})
     const playAgain = ()=>{ //ทำให้ย้อนไปหน้าhome ไม่ไปhistory
-        vocablist.navigation.navigate("Home")
-        vocablist.navigation.navigate("Play")
+        passtohis.navigation.navigate("Home")
+        passtohis.navigation.navigate("Play")
     }
     return(
     <ImageBackground source={bg} style={styles.container}>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
             <Text style={styles.gameover}>Game Over</Text>
-            {/* <Text style={{margin: 5, fontSize: 20}}>chase {score}</Text> */}
+            <Text style={{margin: 5, fontSize: 20}}>chase {round}</Text>
         </View>
         <View style={{flex: 3, justifyContent: 'flex-start'}}>
             <ScrollView style={styles.scrollView}>
