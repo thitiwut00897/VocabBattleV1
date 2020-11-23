@@ -19,9 +19,12 @@
       - [x] เช็คคำซ้ำ
       - [x] นับเวลาถอยหลัง ***https://github.com/vydimitrov/react-countdown-circle-timer#props-for-both-reactreact-native
       - [x] หน้าประวัติท้ายเกม (เคลียเกม[ผ่าน x round] or gameover[ หมดเวลา ]) 
-      - [ ] คะแนน / high score
+      - [ ] หน้า profile
+      - [ ] high score 
       - [ ] ตกแต่งหน้า ประวัติ playing/historyword
       - [ ] sound effect ใส่ได้จะดี ._. ***https://blog.risingstack.com/react-native-tutorial-animation-and-sound/
+            https://docs.expo.io/versions/latest/sdk/audio/#api
+      - [ ] ปุ่ม ปิดเสียง ลดเสียง  เพิ่มเสียง
 
 
    เพิ่ม(เปลี่ยนแปลงอีกที   คิดให้เกมมันมีอะไรเฉย เดี๋ยวคุยกันอีกที)
@@ -30,10 +33,10 @@
    - [x] พัฒนา monster รอบ 3, 10, 20    ให้สุ่มออก [50], [50, 100], [50,100,150], [100, 150, 200]
    - [x] เพิ่ม พลังโจมตีพื้นฐาน รอบ 5, 15, 25 เพิ่มลพลังโจมตีตามเลือด monster/50 ที่ฆ่าได้ในรอบนั้น (ต.ย. พลังโจมตีที่เพิ่ม 1,2,3,4)
    - [ ] เพิ่ม how to play
+   - [x] enter แป้นพิมพ์เพื่อ ตอบ
    
    หรือเพราะฉันเป็น android T.T
    - [ ] how to play (ฟอนมองไม่เห็นง่ะ)
-   - [ ] ตอนเป้นพิมขึ้นมาตอนเล่น หัวใจมันขาดครั้งง่ะ (ถ้าแก้ได้)
    - [ ] androidขึ้นเตือน ฟอน แดง ตลอดเลย
    - [ ] 
 

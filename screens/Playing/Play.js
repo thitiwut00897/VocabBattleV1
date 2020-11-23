@@ -7,6 +7,16 @@ import * as Animatable from 'react-native-animatable';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { AntDesign, Fontisto, Entypo } from '@expo/vector-icons'
 import wordd from '../word.json'
+// import {Audio} from "expo-av"
+
+// async function componentWillMount() {
+    
+//     const buttonFx = new Audio.Sound();
+
+//     await buttonFx.loadAsync(
+//         require("../../assets/img/sfx.mp3")
+//     );
+// }
 
 export default function Play(props) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
@@ -56,6 +66,7 @@ export default function Play(props) {
         t200s3: require('../../assets/img/game/t200s3.png'),
         t200s4: require('../../assets/img/game/t200s4.png'),
     }
+    // componentWillMount();
     useEffect(()=>{
         if(hpmonster <= 0){
             // show status monster animation
@@ -166,6 +177,7 @@ export default function Play(props) {
     }
 
     return(
+        
         <SafeAreaView style={{flex: 1}}>
             <ImageBackground source={bg} style={styles.container}>
 
@@ -235,6 +247,8 @@ export default function Play(props) {
                             backgroundActive="#ffffff"
                             textColor="#5d54a4"
                             onPress={() => {Check()}}
+                            // onPlayPress = {() => {
+                            //     this.buttonFX.replayAsync();}}
                         >CHASE
                         </AwesomeButtonRick>
                     </View>
