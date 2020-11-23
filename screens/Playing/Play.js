@@ -56,19 +56,55 @@ export default function Play(props) {
         t200s3: require('../../assets/img/game/t200s3.png'),
         t200s4: require('../../assets/img/game/t200s4.png'),
     }
-
+    useEffect(()=>{
+        if(hpmonster <= 0){
+            // show status monster animation
+            if (round == 5||round == 15 || round== 25){ // รอบตามนี้เพิ่มพลัง
+                setBasedamage(basedamage+(hpType/50))
+            }
+            setround(round+1)
+            if (round == 3 || round == 10 ){ //ทำให้มอนค่อยๆเก่งขึ้น [สุ่ม50, 50 100, 50 100 150]
+                setLvmon(lvmon+1)
+            }
+            if(round == 20){ // ทำให้สุ่ม 100 150 200
+                setDelezmon(delezmon+1)
+            }
+            console.log(score)
+            console.log(countAlphabet)
+            console.log(countHit)
+            console.log(score+((countAlphabet/countHit)*1000))
+            setScore(score+((countAlphabet/countHit)*1000))
+            setCountHit(0)
+            setCountAlphabet(0)
+            setRandomHp(((Math.floor(Math.random()*lvmon)+delezmon)*50))
+            setHpmonster(randomHp) //set รอบใหม่
+            setHpType(randomHp) //set รอบใหม่
+            setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
+            setImage(randomHp == 50 ? MonsterImg.t50s1 : randomHp == 100 ? MonsterImg.t100s1 : randomHp == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
+            setKey(prevKey => prevKey + 1)
+        }else if(hpmonster/hpType <= 0.25 ){
+            
+            setImage(hpType == 50 ? MonsterImg.t50s4 : hpType == 100 ? MonsterImg.t100s4 : hpType == 150 ? MonsterImg.t150s4 : MonsterImg.t200s4)
+        }else if(hpmonster/hpType <= 0.5) {
+            setImage(hpType == 50 ? MonsterImg.t50s3 : hpType == 100 ? MonsterImg.t100s3 : hpType == 150 ? MonsterImg.t150s3 : MonsterImg.t200s3)
+            
+        }else if(hpmonster/hpType <= 0.75) {
+            setImage(hpType == 50 ? MonsterImg.t50s2 : hpType == 100 ? MonsterImg.t100s2 : hpType == 150 ? MonsterImg.t150s2 : MonsterImg.t200s2)
+            
+        }
+    })
     const Check =()=>{
         if (answer[0] == alphabet  && vocablist.every((item) => item !== answer)){
             if (answer in wordd == true){
                 addVocab(vocablist.concat(answer))
-                {isItemHand ? setHpmonster(hpmonster-((answer.length*basedamage)*2)) : setHpmonster(hpmonster-((answer.length*basedamage)*1))}
-                setIsItemHand(false)
-                setAnswer('')//รีtextinput
-                console.log(vocablist);
-                setStatus('')
                 //ใช้ทำscore
                 setCountAlphabet(countAlphabet+answer.length) 
                 setCountHit(countHit+1)
+                {isItemHand ? setHpmonster(hpmonster-((answer.length*basedamage)*2)) : setHpmonster(hpmonster-((answer.length*basedamage)*1))}
+                setIsItemHand(false)
+                setAnswer('')//รีtextinput
+                
+                setStatus('')
             }else{
                 // ตอบไม่ถูก
                 setAnswer('')//รีtextinput
@@ -128,37 +164,6 @@ export default function Play(props) {
         props.navigation.navigate("Home")
         props.navigation.navigate("History", passtohis)
     }
-
-    useEffect(()=>{
-        if(hpmonster <= 0){
-            // show status monster animation
-            if (round == 5||round == 15 || round== 25){ // รอบตามนี้เพิ่มพลัง
-                setBasedamage(basedamage+(hpType/50))
-            }
-            setround(round+1)
-            if (round == 3 || round == 10 ){ //ทำให้มอนค่อยๆเก่งขึ้น [สุ่ม50, 50 100, 50 100 150]
-                setLvmon(lvmon+1)
-            }
-            if(round == 20){ // ทำให้สุ่ม 100 150 200
-                setDelezmon(delezmon+1)
-            }
-            setScore(score+((countAlphabet/countHit)*1000))
-            setCountHit(0)
-            setCountAlphabet(0)
-            setRandomHp(((Math.floor(Math.random()*lvmon)+delezmon)*50))
-            setHpmonster(randomHp) //set รอบใหม่
-            setHpType(randomHp) //set รอบใหม่
-            setAlphabet(String.fromCharCode(Math.floor(Math.random() * 26) + 97))
-            setImage(randomHp == 50 ? MonsterImg.t50s1 : randomHp == 100 ? MonsterImg.t100s1 : randomHp == 150 ? MonsterImg.t150s1 : MonsterImg.t200s1)
-            setKey(prevKey => prevKey + 1)
-        }else if(hpmonster/hpType <= 0.25 ){
-            setImage(hpType == 50 ? MonsterImg.t50s4 : hpType == 100 ? MonsterImg.t100s4 : hpType == 150 ? MonsterImg.t150s4 : MonsterImg.t200s4)
-        }else if(hpmonster/hpType <= 0.5) {
-            setImage(hpType == 50 ? MonsterImg.t50s3 : hpType == 100 ? MonsterImg.t100s3 : hpType == 150 ? MonsterImg.t150s3 : MonsterImg.t200s3)
-        }else if(hpmonster/hpType <= 0.75) {
-            setImage(hpType == 50 ? MonsterImg.t50s2 : hpType == 100 ? MonsterImg.t100s2 : hpType == 150 ? MonsterImg.t150s2 : MonsterImg.t200s2)
-        }
-    })
 
     return(
         <SafeAreaView style={{flex: 1}}>
@@ -223,7 +228,7 @@ export default function Play(props) {
                         <Text style={styles.status}>{status}</Text>
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'flex-start'}}>
-                        <TextInput style={styles.myInput} autoCapitalize = 'none' onfocus="" onChangeText={(text)=>{setAnswer(text.toLowerCase())}}>{answer}</TextInput>
+                        <TextInput style={styles.myInput} returnKeyType="done" onSubmitEditing={() => {Check()}} autoCapitalize = 'none' onfocus="" onChangeText={(text)=>{setAnswer(text.toLowerCase())}}>{answer}</TextInput>
                         <AwesomeButtonRick type="secondary"
                             backgroundDarker="#9d65c9"
                             borderColor="#9d65c9"
