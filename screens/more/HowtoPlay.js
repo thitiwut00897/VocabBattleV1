@@ -15,7 +15,7 @@ export default class HowtoPlay extends React.Component {
         this.state = {
             activeIndex:0,
             carouselItems: [
-                1, 2, 3, 4
+                1, 2, 3, 4, 5
             ],
             viewport: {
                 width: Dimensions.get('window').width,
@@ -47,7 +47,7 @@ export default class HowtoPlay extends React.Component {
                         <Text style={{fontWeight: 'bold'}}>A</Text>
                     </View>
                     <Text style={styles.mytext}>{'\t'}โดยยานแต่ละคันที่ monster ขับตามคุณมา บ่งบอกความดื้อของ monster ว่าเขาจะยอมฟังคุณมากแค่ไหน</Text>
-                    <Image source={require('../../assets/img/game/t100s1.png')}/>
+                    <Image source={require('../../assets/img/moments/rocket.png')}/>
                 </View>
               </ImageBackground>
               )
@@ -70,27 +70,27 @@ export default class HowtoPlay extends React.Component {
                             size={50}
                             strokeWidth={5}
                         />
-                        <Text style={styles.mytext}>- มีโอกาศตอบผิด / ซ้ำ ได้เพียง 3 ครั้งใน 1 เกม</Text>
-                        <View style={{flexDirection: 'row', margin: 5}}>
-                            <AntDesign name="heart" size={18} color="#cf1b1b" />
-                            <AntDesign name="heart" size={18} color="#cf1b1b" />
-                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
-                        </View>
-                        {/* <View style={{flexDirection: 'row', margin: 5}}>
-                            <AntDesign name="heart" size={18} color="#cf1b1b" />
-                            <AntDesign name="heart" size={18} color="#cf1b1b" />
-                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
-                        </View>
-                        <View style={{flexDirection: 'row', margin: 5}}>
-                            <AntDesign name="heart" size={18} color="#cf1b1b" />
-                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
-                            <AntDesign name="hearto" size={18} color="#cf1b1b" />
-                        </View> */}
                     </View>
               </ImageBackground>
     
             )
-        }else if(index == 3) {
+        }else if(index == 3){
+            return (
+                <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
+                        <View style={styles.mycontainer}>
+                            <Text style={styles.title}>ABOUT GAME 101</Text>
+                            <Text style={styles.mytext}>- คุณจะมีเทคนิคพิเศษ ( Attack Ablilty) เพื่อลดความดื้อของ monster ในรอบที่ 5, 15, 25</Text>
+                            <Text style={styles.mytext}>- มีโอกาศตอบผิด / ซ้ำ ได้เพียง 3 ครั้งใน 1 เกม</Text>
+                            <View style={{flexDirection: 'row', margin: 5}}>
+                                <AntDesign name="heart" size={18} color="#cf1b1b" />
+                                <AntDesign name="heart" size={18} color="#cf1b1b" />
+                                <AntDesign name="hearto" size={18} color="#cf1b1b" />
+                            </View>
+                        </View>
+                </ImageBackground>
+            )
+        }
+        else if(index == 4) {
             return (
               <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
                 <View style={styles.mycontainer}>

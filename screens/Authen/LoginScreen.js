@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
     errorMsg: {
         marginTop: 10,
         color: '#B83B5E',
-        backgroundColor: 'white',
+        fontWeight: 'bold',
+        //backgroundColor: 'white',
         padding: 2
     },
     myForm: {

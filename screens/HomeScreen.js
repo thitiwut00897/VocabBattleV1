@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import { View, StyleSheet, ImageBackground, Button } from 'react-native'
+import { View, StyleSheet, ImageBackground, Button, Text } from 'react-native'
 import * as firebase from 'firebase'
 import Status from '../components/status'
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick'
@@ -81,6 +81,7 @@ export default function HomeScreen(props) {
             {/* {componentWillMount} */}
             
             <Status/>
+            <Text style={styles.greeting}>Hello {displayName}</Text>
             <View style={styles.btn}>
                 {Menu('Play', 'Play')}
             </View>
@@ -112,5 +113,10 @@ const styles = StyleSheet.create({
     btn: {
         width: '40%',
         margin: 10
+    },
+    greeting: {
+        fontSize: 30,
+        color: 'white',
+        fontFamily: 'Chalkboard SE',
     }
 })

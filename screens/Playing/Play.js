@@ -24,6 +24,7 @@ export default function Play(props) {
     const [countHit, setCountHit] = useState(0) // จำนวนการตี ในแต่ละรอบ
     const [countAlphabet, setCountAlphabet] = useState(0) // นับจำนวนตัวอักษร ในแต่ละรอบ
     const [highScore, setHighScore] = useState(0) // hightScore จาก firebase
+    const [coin, setCoin] = useState(0)
     // item
     const [myItemPack, setItemPack] = useState(3)
     const [myItemHand, setItemHand] = useState(2)
@@ -164,25 +165,30 @@ export default function Play(props) {
         }
     }
 
-    const HighScoreFB = () => {
+    const dataFromFB = () => {
         userdata.once('value', (snapshot) => {
             let data = snapshot.val()
             setHighScore(data.highScore)
+            setCoin(data.coins)
         })
     }
 
     const gameOver = () => {
+
+        firebase.database().ref('user/' + user.uid).update({
+            coins: coin + (score/100)
+        })
         if(score > highScore) {
             firebase.database().ref('user/' + user.uid).update({
                 highScore: score
             })
         }
-        const passtohis = [vocablist, round, score]
+        const passtohis = [vocablist, round, score, score > highScore]
         props.navigation.navigate("Home")
         props.navigation.navigate("History", passtohis)
     }
 
-    HighScoreFB()
+    dataFromFB()
     return(
         <ImageBackground source={bg} style={styles.container}>
             <View style={styles.header}>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native'
+import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, FlatList, ImageBackground} from 'react-native'
 import { AntDesign, MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import * as firebase from 'firebase'
 
 export default function Profile() {
+    const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
     const user = firebase.auth().currentUser
     const userdata = firebase.database().ref('user/' + user.uid)
     const momentsImg = firebase.database().ref('momentsImg/')
@@ -44,8 +45,8 @@ export default function Profile() {
     })
 
     return(
-        <View style={styles.container}>
-            <ScrollView>
+        <ImageBackground source={bg} style={styles.container}>
+            <ScrollView style={{marginBottom: 10}}>
                 <View style={{alignSelf: 'center'}}>
                     <View style={styles.myMonster}>
                         <Image source={require('../../assets/img/game/chill.png')} style={styles.image} resizeMode='center'></Image>
@@ -54,17 +55,17 @@ export default function Profile() {
                 <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
                         <Text style={[styles.text, {fontSize: 24} ]}>{user.displayName}</Text>
-                        <Feather name="user" size={15} color="#AEB5BC" />
+                        <Feather name="user" size={15} color="#8bcdcd" />
                         <Text style={[styles.subtext]}>Name</Text>
                     </View>
-                    <View style={[styles.statsBox, {borderColor: '#DFD8CB', borderLeftWidth: 1, borderRightWidth: 1}]}>
+                    <View style={[styles.statsBox, {borderColor: '#f5a25d', borderLeftWidth: 1, borderRightWidth: 1}]}>
                         <Text style={[styles.text, {fontSize: 24} ]}>{highScore}</Text>
-                        <AntDesign name="Trophy" size={15} color="#AEB5BC" />
+                        <AntDesign name="Trophy" size={15} color="#ffda77" />
                         <Text style={[styles.subtext]}>High Score</Text>
                     </View>
                     <View style={styles.statsBox}>
                         <Text style={[styles.text, {fontSize: 24} ]}>{coins}</Text>
-                        <MaterialCommunityIcons name="coins" size={15} color="#AEB5BC" />
+                        <MaterialCommunityIcons name="coins" size={15} color="#ffda77" />
                         <Text style={[styles.subtext]}>Coins</Text>
                     </View>
                 </View>
@@ -77,7 +78,7 @@ export default function Profile() {
                         </View>
                         <View style={styles.mediaImageContainer}>
                             <Image source={require('../../assets/img/moments/ictruck.png')} style={styles.image} resizeMode='cover'></Image>
-                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>My Birthday</Text></View>
+                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>i-c truck</Text></View>
                         </View>
                         <View style={styles.mediaImageContainer}>
                             <Image source={require('../../assets/img/moments/birthday.png')} style={styles.image} resizeMode='cover'></Image>
@@ -90,15 +91,14 @@ export default function Profile() {
                     </ScrollView>
                 </View>
             </ScrollView>
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        resizeMode: "cover",
     },
     text: {
         color: '#534e52'
