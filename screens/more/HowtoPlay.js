@@ -59,17 +59,7 @@ export default class HowtoPlay extends React.Component {
                         <Text style={styles.mytext}>- ตัวอักษร 1 ตัว จะลดความดื้อของ monster ไป 10 หน่วย</Text>
                         <Text style={styles.hp}>190/200</Text>
                         <ProgressBar progress={190/200} width={200} color={'#ec0101'} />
-                        <Text style={styles.mytext}>- อย่าลืมว่าคุณต้องตอบภายในเวลาที่ monster กำหนด</Text>
-                        <CountdownCircleTimer
-                            onComplete={() => {
-                            return [true, 1000] // repeat animation in 1.5 seconds
-                            }}
-                            isPlaying
-                            duration={10}
-                            colors="#c060a1"
-                            size={50}
-                            strokeWidth={5}
-                        />
+                        <Text style={styles.mytext}>- คุณจะมีเทคนิคพิเศษ ( Attack Ablilty) เพื่อลดความดื้อของ monster ในรอบที่ 5, 15, 25</Text>
                     </View>
               </ImageBackground>
     
@@ -79,7 +69,17 @@ export default class HowtoPlay extends React.Component {
                 <ImageBackground style={styles.card} source={require('../../assets/img/spacegif2.jpg')}>
                         <View style={styles.mycontainer}>
                             <Text style={styles.title}>ABOUT GAME 101</Text>
-                            <Text style={styles.mytext}>- คุณจะมีเทคนิคพิเศษ ( Attack Ablilty) เพื่อลดความดื้อของ monster ในรอบที่ 5, 15, 25</Text>
+                            <Text style={styles.mytext}>- อย่าลืมว่าคุณต้องตอบภายในเวลาที่ monster กำหนด</Text>
+                            <CountdownCircleTimer
+                                onComplete={() => {
+                                return [true, 1000] // repeat animation in 1.5 seconds
+                                }}
+                                isPlaying
+                                duration={10}
+                                colors="#c060a1"
+                                size={50}
+                                strokeWidth={5}
+                            />
                             <Text style={styles.mytext}>- มีโอกาศตอบผิด / ซ้ำ ได้เพียง 3 ครั้งใน 1 เกม</Text>
                             <View style={{flexDirection: 'row', margin: 5}}>
                                 <AntDesign name="heart" size={18} color="#cf1b1b" />

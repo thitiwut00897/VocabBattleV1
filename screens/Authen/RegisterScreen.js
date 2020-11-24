@@ -35,45 +35,63 @@ export default function RegisterScreen(props) {
             displayName: name,
             highScore: 0,
             coins: 0,
-            moments: {
-                moment1: {
-                    title: 'My Birthday',
-                    have: false
-                },
-                moment2: {
-                    title: 'Ice-cream Truck',
-                    have: false
-                },
-                moment3: {
-                    title: 'ciao !',
-                    have: false
-                },
-                moment4: {
-                    title: 'Hi Fuji',
-                    have: false
-                },
-                moment5: {
-                    title: 'Merry Christmas',
-                    have: false
-                },
-                moment6: {
-                    title: 'holiday beach',
-                    have: false
-                },
-                moment7: {
-                    title: 'COVID 19',
-                    have: false
-                },
-                mometn8: {
-                    title: 'coffee & chill',
-                    have: false
-                },
-                moment9: {
-                    title: 'y u leave me alone',
-                    have: false
-                }
+            title1: 'MyBirthdy',
+            have1: false,
+            title2: 'i-c truck',
+            have2: false,
+            title3: 'ciao !',
+            have3: false,
+            title4: 'Hi Fuji',
+            have4: false,
+            title5: 'Merry Christmas',
+            have5: false,
+            title6: 'holiday beach',
+            have6: false,
+            title7: 'COVID19',
+            have7: false,
+            title8: 'coffee & chill',
+            have8: false,
+            title9: 'y u leave me !',
+            have9: false,
+            // moments: {
+            //     moment1: {
+            //         title: 'My Birthday',
+            //         have: false
+            //     },
+            //     moment2: {
+            //         title: 'Ice-cream Truck',
+            //         have: false
+            //     },
+            //     moment3: {
+            //         title: 'ciao !',
+            //         have: false
+            //     },
+            //     moment4: {
+            //         title: 'Hi Fuji',
+            //         have: false
+            //     },
+            //     moment5: {
+            //         title: 'Merry Christmas',
+            //         have: false
+            //     },
+            //     moment6: {
+            //         title: 'holiday beach',
+            //         have: false
+            //     },
+            //     moment7: {
+            //         title: 'COVID 19',
+            //         have: false
+            //     },
+            //     moment8: {
+            //         title: 'coffee & chill',
+            //         have: false
+            //     },
+            //     moment9: {
+            //         title: 'y u leave me alone',
+            //         have: false
+            //     }
 
-            }
+            // }
         })
     }
 

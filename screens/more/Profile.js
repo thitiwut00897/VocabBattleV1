@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, FlatList, ImageBackground} from 'react-native'
+import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 import { AntDesign, MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import * as firebase from 'firebase'
 
@@ -7,28 +7,98 @@ export default function Profile() {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
     const user = firebase.auth().currentUser
     const userdata = firebase.database().ref('user/' + user.uid)
-    const momentsImg = firebase.database().ref('momentsImg/')
     // game
     const [coins, setCoins] = useState(0)
     const [highScore, setHighScore] = useState(0)
-    const [moments, setMoments] = useState([])
-    const DATA1 = [
-        {
-            id: 'moment1',
-            title: 'My Birthday',
-            url: '../../assets/img/moments/birthday.png'
-        },
-        {
-            id: 'moment2',
-            title: 'ic truck',
-            url: '../../assets/img/moments/ictruck.png'
-        },
-        {
-            id: 'moment3',
-            title: 'ciao',
-            url: '../../assets/img/moments/italy.png'
-        },
+    //moment title
+    const [title1, setTitle1] = useState('')
+    const [title2, setTitle2] = useState('')
+    const [title3, setTitle3] = useState('')
+    const [title4, setTitle4] = useState('')
+    const [title5, setTitle5] = useState('')
+    const [title6, setTitle6] = useState('')
+    const [title7, setTitle7] = useState('')
+    const [title8, setTitle8] = useState('')
+    const [title9, setTitle9] = useState('')
+    //moment have
+    const [have1, setHave1] = useState(false)
+    const [have2, setHave2] = useState(false)
+    const [have3, setHave3] = useState(false)
+    const [have4, setHave4] = useState(false)
+    const [have5, setHave5] = useState(false)
+    const [have6, setHave6] = useState(false)
+    const [have7, setHave7] = useState(false)
+    const [have8, setHave8] = useState(false)
+    const [have9, setHave9] = useState(false)
+    // moment img
+    const momentImg = [
+        require('../../assets/img/moments/birthday.png'),
+        require('../../assets/img/moments/ictruck.png'),
+        require('../../assets/img/moments/italy.png'),
+        require('../../assets/img/moments/japan.png'),
+        require('../../assets/img/moments/christmas.png'),
+        require('../../assets/img/moments/beach.png'),
+        require('../../assets/img/moments/sick.png'),
+        require('../../assets/img/moments/coffeechill.png'),
+        require('../../assets/img/moments/angry.png'),
     ]
+    // const moment404 = require('..')
+    const moment = [[title1, have1], [title2, have2], [title3, have3], [title4, have4], [title5, have5], [title6, have6], [title7, have7], [title8, have8], [title9, have9]]
+    const renderMoment = moment.map((each, index) => {
+        return (
+            <View style={styles.mediaImageContainer}>
+                <Image source={moment[index][1] ? momentImg[index] : require('../../assets/img/moments/donthave.png')} style={styles.image} resizeMode='cover'></Image>
+                {moment[index][1] ? <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>{each[0]}</Text></View> :
+                    <TouchableOpacity key={index} onPress={() => {takeMoment(index ,moment[index][1])}}>
+                        <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>exchange 1000 coins</Text></View>
+                    </TouchableOpacity>
+                }
+            </View>
+        )
+    })
+
+    const takeMoment = (ind) => {
+        let newMoment = [moment[0][1], moment[1][1], moment[2][1], moment[3][1], moment[4][1], moment[5][1], moment[6][1], moment[7][1],  moment[8][1]]
+        newMoment[ind] = true
+        console.log(newMoment)
+        if(coins >= 1000){
+            Alert.alert(
+                "Are You Sure ?",
+                "แน่ใจน้า ที่จะรื้อฟื้นความทรงจำนนี้",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => {
+                    firebase.database().ref('user/' + user.uid).update({
+                        coins: coins - 1000,
+                        have1: newMoment[0],
+                        have2: newMoment[1],
+                        have3: newMoment[2],
+                        have4: newMoment[3],
+                        have5: newMoment[4],
+                        have6: newMoment[5],
+                        have7: newMoment[6],
+                        have8: newMoment[7],
+                        have9: newMoment[8],
+                    })
+                  }}
+                ],
+                { cancelable: false }
+              );
+        }else {
+            Alert.alert(
+                "Omg",
+                "coins ไม่เพียงพอที่จะรื้อฟื้นความทรงจำ",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+              );
+        }
+    }
 
 
     const readUser = () => {
@@ -36,7 +106,26 @@ export default function Profile() {
             let data = snapshot.val()
             setCoins(data.coins)
             setHighScore(data.highScore)
-            setMoments(data.moments)
+            // moment title
+            setTitle1(data.title1)
+            setTitle2(data.title2)
+            setTitle3(data.title3)
+            setTitle4(data.title4)
+            setTitle5(data.title5)
+            setTitle6(data.title6)
+            setTitle7(data.title7)
+            setTitle8(data.title8)
+            setTitle9(data.title9)
+            // moment have
+            setHave1(data.have1)
+            setHave2(data.have2)
+            setHave3(data.have3)
+            setHave4(data.have4)
+            setHave5(data.have5)
+            setHave6(data.have6)
+            setHave7(data.have7)
+            setHave8(data.have8)
+            setHave9(data.have9)
         })
     }
 
@@ -72,22 +161,7 @@ export default function Profile() {
                 <View style={{marginTop: 32}}>
                     <Text style={[styles.text, {paddingLeft: 10, marginBottom: 5}]}>Moments: </Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require('../../assets/img/moments/birthday.png')} style={styles.image} resizeMode='cover'></Image>
-                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>My Birthday</Text></View>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require('../../assets/img/moments/ictruck.png')} style={styles.image} resizeMode='cover'></Image>
-                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>i-c truck</Text></View>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require('../../assets/img/moments/birthday.png')} style={styles.image} resizeMode='cover'></Image>
-                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>My Birthday</Text></View>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require('../../assets/img/moments/italy.png')} style={styles.image} resizeMode='cover'></Image>
-                            <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>My Birthday</Text></View>
-                        </View>
+                        {renderMoment}
                     </ScrollView>
                 </View>
             </ScrollView>
