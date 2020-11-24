@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 import firebaseConfig from './firebase/config'
 
 export default function App() {
+  
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig)
   return (

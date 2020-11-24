@@ -8,16 +8,6 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { Fontisto, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import wordd from '../word.json'
 import * as firebase from 'firebase'
-// import {Audio} from "expo-av"
-
-// async function componentWillMount() {
-    
-//     const buttonFx = new Audio.Sound();
-
-//     await buttonFx.loadAsync(
-//         require("../../assets/img/sfx.mp3")
-//     );
-// }
 
 export default function Play(props) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
@@ -88,7 +78,7 @@ export default function Play(props) {
             console.log(countAlphabet)
             console.log(countHit)
             console.log(score+((countAlphabet/countHit)*1000))
-            setScore(score+((countAlphabet/countHit)*1000))
+            setScore(score+(Math.round(countAlphabet/countHit)*1000))
             setCountHit(0)
             setCountAlphabet(0)
             setRandomHp(((Math.floor(Math.random()*lvmon)+delezmon)*50))
