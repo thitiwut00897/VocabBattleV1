@@ -81,7 +81,7 @@ export default function HomeScreen(props) {
             {/* {componentWillMount} */}
             
             <Status/>
-            <Text style={styles.greeting}>Hello {displayName}</Text>
+            <Text style={styles.greeting}>Vocab Battle</Text>
             <View style={styles.btn}>
                 {Menu('Play', 'Play')}
             </View>
