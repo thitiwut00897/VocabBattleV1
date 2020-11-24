@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     myInput: {
         borderBottomColor: '#8A8F9E',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        color: '#394867',
+        color: 'green',
         fontSize: 16,
         padding: 2
     },
