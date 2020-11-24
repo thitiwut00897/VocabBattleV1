@@ -17,6 +17,7 @@ export default function RegisterScreen(props) {
         if(confirmPassword == password){
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(userCredentails => {
+                writeUserData(firebase.auth().currentUser)
                 return userCredentails.user.updateProfile({
                     displayName: name
                 })
@@ -26,6 +27,55 @@ export default function RegisterScreen(props) {
             setMsg('Passwords do not math :(')
         }
     }
+
+    const writeUserData = (user) => {
+        firebase.database().ref('user/' + user.uid).set({
+            email: email,
+            displayName: name,
+            highScore: 0,
+            coins: 0,
+            moments: {
+                moment1: {
+                    title: 'My Birthday',
+                    have: false
+                },
+                moment2: {
+                    title: 'Ice-cream Truck',
+                    have: false
+                },
+                moment3: {
+                    title: 'ciao !',
+                    have: false
+                },
+                moment4: {
+                    title: 'Hi Fuji',
+                    have: false
+                },
+                moment5: {
+                    title: 'Merry Christmas',
+                    have: false
+                },
+                moment6: {
+                    title: 'holiday beach',
+                    have: false
+                },
+                moment7: {
+                    title: 'COVID 19',
+                    have: false
+                },
+                mometn8: {
+                    title: 'coffee & chill',
+                    have: false
+                },
+                moment9: {
+                    title: 'y u leave me alone',
+                    have: false
+                }
+
+            }
+        })
+    }
+
     return(
         <View style={styles.container}>
             {/* <Status/> */}

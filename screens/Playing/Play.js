@@ -5,7 +5,7 @@ import ProgressBar from 'react-native-progress/Bar'
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick'
 import * as Animatable from 'react-native-animatable';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-import { AntDesign, Fontisto, Entypo } from '@expo/vector-icons'
+import { Fontisto, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import wordd from '../word.json'
 // import {Audio} from "expo-av"
 
@@ -30,6 +30,7 @@ export default function Play(props) {
     const [score, setScore] = useState(0)
     const [countHit, setCountHit] = useState(0) // จำนวนการตี ในแต่ละรอบ
     const [countAlphabet, setCountAlphabet] = useState(0) // นับจำนวนตัวอักษร ในแต่ละรอบ
+    const [highScore, setHighScore] = useState(5000) // hightScore จาก firebase
     // item
     const [myItemPack, setItemPack] = useState(3)
     const [myItemHand, setItemHand] = useState(2)
@@ -39,7 +40,7 @@ export default function Play(props) {
     const [hpmonster, setHpmonster] = useState(50)
     const [hpType, setHpType] = useState(50)
     const [status, setStatus] = useState('Heyy')
-    const [img, setImage] = useState(require('../../assets/img/game/t100s1.png'))
+    const [img, setImage] = useState(require('../../assets/img/game/t50s1.png'))
     const [key, setKey] = useState(0);
     const [lvmon, setLvmon] = useState(1); //lv การเกิดมอน
     const [delezmon, setDelezmon] = useState(1); //ใช้ไม่ให้มอน50 เกิดหลังรอบ20
@@ -177,26 +178,22 @@ export default function Play(props) {
     }
 
     return(
-        
-        <SafeAreaView style={{flex: 1}}>
-            <ImageBackground source={bg} style={styles.container}>
-
-                <View style={styles.myheader}>
-                    <View style={{flex: 1}}>
-                        {/* <AntDesign name="home" size={30} color="black" /> */}
-                        <Text style={{alignSelf: 'flex-start', marginTop: 10}}>round : {round}</Text>
-                        <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
+        <ImageBackground source={bg} style={styles.container}>
+            <View style={styles.header}>
+                <View style={styles.statsContainer}>
+                    <View style={styles.statsBox}>
+                        {/* heart */}
+                        <View style={{flex: 1, flexDirection: 'row', alignContent: 'center', top: 10}}>
                             {heart[0] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
                             {heart[1] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
                             {heart[2] ? <AntDesign name="heart" size={30} color="#cf1b1b" /> : <AntDesign name="hearto" size={30} color="#cf1b1b" />}
                         </View>
                     </View>
-                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                    <View style={[styles.statsBox, {borderColor: '#DFD8CB', borderLeftWidth: 1, borderRightWidth: 1}]}>
                         <CountdownCircleTimer
                             key={key}
                             isPlaying
                             duration={hpType == 50 ? 30: hpType == 100 ? 40: hpType == 150 ? 50: 60}
-                            // duration={hpType == 50 ? 0: hpType == 0 ? 0: hpType == 150 ? 0: 0}
                             colors={[
                                 ['#9d65c9', 0.3],
                                 ['#d789d7', 0.3],
@@ -208,37 +205,49 @@ export default function Play(props) {
                             }}
                             size={50}
                             strokeWidth={5}
-                        >
+                            >
                             {({ remainingTime, animatedColor }) => (
-                            <Animated.Text
-                                style={{ color: animatedColor }}>
-                                {remainingTime}
-                            </Animated.Text>
-                            )}
+                                <Animated.Text
+                                    style={{ color: animatedColor }}>
+                                    {remainingTime}
+                                </Animated.Text>
+                                )}
                         </CountdownCircleTimer>
-                        <View style={{flexDirection: 'row', margin: 5}}>
-                            <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemPack}>
-                                <Text><Fontisto name="suitcase" size={30} color="#59405c" /> x{myItemPack}</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemHand}>
-                                <Text><Entypo name="hand" size={30} color="#59405c" /> x{myItemHand}</Text>
-                            </TouchableOpacity>
-                        </View>
-                            <Text style={styles.status}>length {isItemHand ? 'x2' : 'x1'}</Text>
-                            <Text style={styles.status}>Attack {basedamage}</Text>
-                            <Text style={styles.status}>Score {score}</Text>
+                    </View>
+                    <View style={styles.statsBox}>
+                        <Text style={[styles.text, {fontSize: 24} ]}>{score}</Text>
+                        {score > highScore ? <MaterialCommunityIcons name="trophy" size={20} color="#ffda77" /> : null}
+                        <Text style={styles.subtext}>score</Text>
                     </View>
                 </View>
 
-                <View style={styles.mybody}>
-                    <View style={styles.myMonster}>
-                        <Text style={styles.hp}>{hpmonster} / {hpType}</Text>
-                        <ProgressBar progress={hpmonster/hpType} width={200} color={'#ec0101'} />
-                        <Animatable.Text animation="bounce" style={styles.myTypeWord}>{alphabet}</Animatable.Text>
-                        <Image source={img} style={{width: 285, height: 210, margin: 20}} />
-                        <Text style={styles.status}>{status}</Text>
+                <View style={styles.statsContainer}>
+                    {/* items */}
+                    <View style={[styles.statsBox, {flexDirection: 'row', alignItems: 'flex-start', paddingLeft: 10}]}>
+                        <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemPack}>
+                            <Text style={styles.subtext}><Fontisto name="suitcase" size={25} color="#59405c" /> x{myItemPack}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{marginHorizontal: 10}} onPress={itemHand}>
+                            <Text style={styles.subtext}><Entypo name="hand" size={25} color="#59405c" /> x{myItemHand}</Text>
+                        </TouchableOpacity>
                     </View>
+                    <View style={[styles.statsBox,  {alignItems: 'flex-end', paddingRight: 10}]}>
+                            <Text style={[styles.text, {marginVertical: 3, color: '#892cdc'} ]}>ROUND {round} {round == 5 || round == 15 || round == 25 ? <AntDesign name="star" size={35} color="#ffe05d" /> : null}</Text>
+                        <Text style={[styles.subtext, {marginVertical: 3} ]}>LENGTH {isItemHand ? 'x2' : 'x1'}</Text>
+                        <Text style={[styles.subtext, {marginVertical: 3} ]}>ATTACK {basedamage}</Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={styles.mybody}>
+                <View style={[styles.statsContainer, {flexDirection: 'column'}]}>
+                    <Text style={styles.hp}>{hpmonster} / {hpType}</Text>
+                    <ProgressBar progress={hpmonster/hpType} width={200} color={'#ec0101'} />
+                    <Animatable.Text animation="bounce" style={styles.myTypeWord}>{alphabet}</Animatable.Text>
+                    <View style={styles.mediaImageContainer}>
+                        <Image source={img} style={styles.image} resizeMode='cover'></Image>
+                    </View>
+                    <Text style={styles.status}>{status}</Text>
                     <View style={{alignItems: 'center', justifyContent: 'flex-start'}}>
                         <TextInput style={styles.myInput} returnKeyType="done" onSubmitEditing={() => {Check()}} autoCapitalize = 'none' onfocus="" onChangeText={(text)=>{setAnswer(text.toLowerCase())}}>{answer}</TextInput>
                         <AwesomeButtonRick type="secondary"
@@ -253,37 +262,47 @@ export default function Play(props) {
                         </AwesomeButtonRick>
                     </View>
                 </View>
-
-            </ImageBackground>
-        </SafeAreaView>
+            </View>
+        </ImageBackground>
     )
-}
-
-Play.navigationOptions = {
-    headerShown: false
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        // backgroundColor: 'white',
+        flex: 1,
         resizeMode: "cover",
     },
-    myheader: {
+    header: {
         flex: 1,
+        alignItems: 'flex-start'
+    },
+    text: {
+        color: '#534e52'
+    },
+    subtext: {
+        fontSize: 12,
+        color: '#AEB5BC',
+        textTransform: 'uppercase',
+        fontWeight: '500'
+    },
+    statsContainer: {
         flexDirection: 'row',
-        paddingTop: 10,
-        paddingHorizontal: 10,
+        alignItems: 'center'
+    },
+    statsBox: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 16,
+        flex: 1
     },
     mybody: {
-        flex: 6,
+        flex: 3,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     myMonster: {
-        marginTop: 40,
+        marginTop: 30,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -307,6 +326,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         padding: 5,
         margin: 10
+    },
+    mediaImageContainer: {
+        width: 250,
+        height: 185,
+        overflow: 'hidden',
+        marginHorizontal: 10
+    },
+    image: {
+        flex: 1,
+        width: undefined,
+        height: undefined
     },
     status: {
         fontSize: 20,
