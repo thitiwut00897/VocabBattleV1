@@ -7,6 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { Fontisto, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import wordd from '../word.json'
+import * as firebase from 'firebase'
 // import {Audio} from "expo-av"
 
 // async function componentWillMount() {
@@ -20,6 +21,8 @@ import wordd from '../word.json'
 
 export default function Play(props) {
     const [bg, setBG] = useState(require('../../assets/img/space.jpg'))
+    const user = firebase.auth().currentUser
+    const userdata = firebase.database().ref('user/' + user.uid)
     // game
     const [vocablist, addVocab] = useState([])
     const [answer, setAnswer] = useState("")
@@ -30,7 +33,7 @@ export default function Play(props) {
     const [score, setScore] = useState(0)
     const [countHit, setCountHit] = useState(0) // จำนวนการตี ในแต่ละรอบ
     const [countAlphabet, setCountAlphabet] = useState(0) // นับจำนวนตัวอักษร ในแต่ละรอบ
-    const [highScore, setHighScore] = useState(5000) // hightScore จาก firebase
+    const [highScore, setHighScore] = useState(0) // hightScore จาก firebase
     // item
     const [myItemPack, setItemPack] = useState(3)
     const [myItemHand, setItemHand] = useState(2)
@@ -171,12 +174,25 @@ export default function Play(props) {
         }
     }
 
+    const HighScoreFB = () => {
+        userdata.once('value', (snapshot) => {
+            let data = snapshot.val()
+            setHighScore(data.highScore)
+        })
+    }
+
     const gameOver = () => {
+        if(score > highScore) {
+            firebase.database().ref('user/' + user.uid).update({
+                highScore: score
+            })
+        }
         const passtohis = [vocablist, round, score]
         props.navigation.navigate("Home")
         props.navigation.navigate("History", passtohis)
     }
 
+    HighScoreFB()
     return(
         <ImageBackground source={bg} style={styles.container}>
             <View style={styles.header}>
