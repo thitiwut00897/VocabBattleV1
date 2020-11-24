@@ -9,7 +9,6 @@ export default function HomeScreen(props) {
     const [bg, setBg] = useState(require('../assets/img/spacegif2.gif'))
     const [email, setEmail] = useState('')
     const [displayName, setDisplayName] = useState('')
-    const [playing, setPlaying] = useState(true)
     const stretch = true
     
     async function componentWillMount() {
@@ -19,19 +18,13 @@ export default function HomeScreen(props) {
             require("../assets/img/bggg.mp3")
           );
           await backgroundMusic.setIsLoopingAsync(true);
-          {playing?await backgroundMusic.playAsync():await backgroundMusic.stopAsync();}
-          
-          // Your sound is playing!
+          await backgroundMusic.playAsync();
         } catch (error) {
-          // An error occurred!
-          console.log('hello')
-        //   await backgroundMusic.replayAsync();
-        //   await backgroundMusic.stopAsync();
+            console.log('wait!!')
         }
     }
-    
-    componentWillMount();
-
+    componentWillMount()
+    // const willmount = componentWillMount();
     useEffect(() => {
         try {
             const {email, displayName} = firebase.auth().currentUser
@@ -46,18 +39,9 @@ export default function HomeScreen(props) {
     })
 
     const signOutUser = () => {
-        setPlaying(false)
         firebase.auth().signOut()
         
     }
-    //test
-    const mutebackground=()=>{
-        setPlaying(false)
-    }
-    const openbackground=()=>{
-        setPlaying(true)
-    }
-    //test
 
     const Menu = (title, naviName) => {
         return (
@@ -67,7 +51,6 @@ export default function HomeScreen(props) {
                 borderColor="#9d65c9"
                 backgroundActive="#ffffff"
                 textColor="#5d54a4"
-                // onPlayPress={()=>{stop()}}
                 onPress={() => {
                     naviName == 'signOutUser' ? signOutUser() : props.navigation.navigate(naviName)
                 }}>{title}
@@ -78,8 +61,6 @@ export default function HomeScreen(props) {
 
     return(
         <ImageBackground source={bg} style={styles.container} >
-            {/* {componentWillMount} */}
-            
             <Status/>
             <Text style={styles.greeting}>Vocab Battle</Text>
             <View style={styles.btn}>
