@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable'
 
 export default function ForgotPassword(props) {
+    const [bg, setBg] = useState(require('../../assets/img/spacegif7.gif'))
     const [email, setEmail] = useState('')
     const [msg, setMsg] = useState('')
     const [errorMsg, setErrorMsg] = useState()
@@ -16,7 +17,7 @@ export default function ForgotPassword(props) {
     }
 
     return (
-        <View style={styles.container}>
+        <ImageBackground source={bg} style={styles.container}>
             <Animatable.Text animation="bounce" style={styles.greeting}>Forgot Password?</Animatable.Text>
             <View style={styles.myForm}>
                 <View style={{marginTop: 32}}>
@@ -37,7 +38,7 @@ export default function ForgotPassword(props) {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ImageBackground>
     )
 }
 
@@ -47,8 +48,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        resizeMode: "cover",
     },
     greeting: {
+        color: 'white',
         fontSize: 24,
         fontWeight: '400',
         textAlign: 'center'
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     inputTitle: {
-        color: '#8A8F9E',
+        color: 'white',
         textTransform: 'uppercase',
         marginBottom: 10
     },
