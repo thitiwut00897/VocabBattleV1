@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
 import * as firebase from 'firebase'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 // import Status from '.../components/status';
 
 export default function RegisterScreen(props) {
+    const [bg, setBg] = useState(require('../../assets/img/spacegif6.gif'))
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -77,7 +78,7 @@ export default function RegisterScreen(props) {
     }
 
     return(
-        <View style={styles.container}>
+        <ImageBackground source={bg} style={styles.container}>
             {/* <Status/> */}
             <Animatable.Text animation="bounce" style={styles.greeting}>Sign up to get started</Animatable.Text>
             <View style={styles.myForm}>
@@ -128,7 +129,7 @@ export default function RegisterScreen(props) {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ImageBackground>
     )
 }
 
@@ -137,11 +138,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        resizeMode: "cover",
     },
     greeting: {
         fontSize: 24,
         fontWeight: '400',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'white',
     },
     errorMsg: {
         marginTop: 15,
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     inputTitle: {
-        color: '#8A8F9E',
+        color: 'white',
         textTransform: 'uppercase',
         marginBottom: 10
     },
