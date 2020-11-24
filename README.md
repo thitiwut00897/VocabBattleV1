@@ -3,7 +3,7 @@
    - Authen
       - [x] register
       - [x] login/logout
-      - [ ] forgot password
+      - [x] forgot password
       - [ ] change password
       - [ ] create user database
       - [x] netInfo
