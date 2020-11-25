@@ -46,7 +46,7 @@ export default function Profile() {
     const moment = [[title1, have1], [title2, have2], [title3, have3], [title4, have4], [title5, have5], [title6, have6], [title7, have7], [title8, have8], [title9, have9]]
     const renderMoment = moment.map((each, index) => {
         return (
-            <View style={styles.mediaImageContainer}>
+            <View key={index} style={styles.mediaImageContainer}>
                 <Image source={moment[index][1] ? momentImg[index] : require('../../assets/img/moments/donthave.png')} style={styles.image} resizeMode='cover'></Image>
                 {moment[index][1] ? <View style={{backgroundColor: '#ffda77', padding: 5}}><Text style={{alignSelf: 'center'}}>{each[0]}</Text></View> :
                     <TouchableOpacity key={index} onPress={() => {takeMoment(index ,moment[index][1])}}>
