@@ -98,7 +98,7 @@ export default class HowtoPlay extends React.Component {
                     <Text style={styles.myitem}><Fontisto name="suitcase" size={30} color="white" /> - แพคกระเป๋า</Text>
                     <Text style={styles.mytext}>{'\t'}จะทำการแพค monster ตัวนั้นส่งกลับบ้านทันที</Text>
                     <Text style={styles.myitem}><Entypo name="hand" size={30} color="white" /> - ลูบหัว</Text>
-                    <Text style={styles.mytext}>{'\t'}เมื่อลูบหัว จะลดความดื้อของ monster x2</Text>
+                    <Text style={styles.mytext}>{'\t'}เมื่อลูบหัว จะเพิ่มความยาวคำศัพท์ของคุณ x2</Text>
                 </View>
               </ImageBackground>
     
