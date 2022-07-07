@@ -37,7 +37,10 @@
    หรือเพราะฉันเป็น android T.T
    - [ ] how to play (ฟอนมองไม่เห็นง่ะ)
    - [ ] androidขึ้นเตือน ฟอน แดง ตลอดเลย
-   - [ ] 
+
+![Screenshot_20220707-163403_Video Player](https://user-images.githubusercontent.com/42912623/177742494-905711d8-e7ac-4f3e-8de5-4e3a681d1c4f.jpg)
+![Screenshot_20220707-163336_Video Player](https://user-images.githubusercontent.com/42912623/177742512-83d82df0-a6a3-4aa1-beee-86a2f89a2965.jpg)
+![Screenshot_20220707-163324_Video Player](https://user-images.githubusercontent.com/42912623/177742535-6aedd030-402f-4009-ae84-c34cd4cceef5.jpg)
 
 
 
